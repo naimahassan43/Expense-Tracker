@@ -30,10 +30,26 @@ function addToDom(transaction) {
   item.innerHTML = `${transaction.text}<span>${sign}${Math.abs(transaction.amount)}</span> <button class="delete-btn">x</button>`;
   list.appendChild(item);
 }
+//Update balance
+function updateBalance() {
+//  extract amount from transactions
+  const amounts = transactions.map(transaction => transaction.amount);
+  // calculate total balance
+  const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
 
+  //calculate income 
+  const income = amounts.filter(item => item > 0).reduce((acc, item) =>(acc+= item),0).toFixed(2);
+  // calculate expense
+  const expense = Math.abs(amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0).toFixed(2));
+  //updating balance into DOM
+  balance.innerText = `$${total}`;
+  moneyPlus.innerText = `$${ income }`;
+  moneyMinus.innerText = `$${expense}`;
+}
 //Initialize app 
 function init() {
   list.innerHTML = '';
   transactions.forEach(addToDom);
+  updateBalance();
 }
 init();
