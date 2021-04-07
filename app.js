@@ -15,7 +15,7 @@ const dummyTrans = [
   { id: 5, text: "Freelancing", amount: 250 },
 ];
 
-const transactions = dummyTrans;
+let transactions = dummyTrans;
 
 //Add transaction to DOM 
 function addTransaction(e) {
@@ -41,6 +41,12 @@ function addTransaction(e) {
 function randNum() {
   return Math.floor(Math.random() * 1000000000);
 }
+
+//removing transaction from History
+function rmvtrans(id) {
+  transactions = transactions.filter(transaction => transaction.id !== id);init();
+}
+
 //Add transaction to DOM  
 function addToDom(transaction) {
   //get sign value
@@ -50,7 +56,7 @@ function addToDom(transaction) {
   //add a class to the list 
   item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
   //generate html
-  item.innerHTML = `${transaction.text}<span>${sign}${Math.abs(transaction.amount)}</span> <button class="delete-btn">x</button>`;
+  item.innerHTML = `${transaction.text}<span>${sign}${Math.abs(transaction.amount)}</span> <button class="delete-btn" onclick = "rmvtrans(${transaction.id})">x</button>`;
   list.appendChild(item);
 }
 //Update balance
